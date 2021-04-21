@@ -8,7 +8,7 @@ import QuestionCard from './components/QuestionCard';
 // types
 import { Difficulty, QuestionState } from './API';
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -46,9 +46,35 @@ const App = () => {
     }
   };
 
-  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {};
+  const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      // user answer
+      const answer = event.currentTarget.value;
+      // check answer
+      const correct = questions[questionNumber].correct_answer === answer;
+      // add score if correct answer
+      if (correct) setScore((prev) => prev + 1);
+      // save answer in user answer array
+      const answerObject = {
+        question: questions[questionNumber].question,
+        answer,
+        correct,
+        correctAnswer: questions[questionNumber].correct_answer,
+      };
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+  };
 
-  const nextQuestion = () => {};
+  const nextQuestion = () => {
+    // go to next queston if not last question
+    const nextQuestion = questionNumber + 1;
+
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      setQuestionNumber(nextQuestion);
+    }
+  };
 
   return (
     <div>
@@ -73,9 +99,15 @@ const App = () => {
           userAnswer={userAnswers ? userAnswers[questionNumber] : undefined}
         />
       )}
-      <button className="next" onClick={nextQuestion}>
-        Next
-      </button>
+
+      {!gameOver &&
+        !loading &&
+        userAnswers.length === questionNumber + 1 &&
+        questionNumber !== TOTAL_QUESTIONS - 1 && (
+          <button className="next" onClick={nextQuestion}>
+            Next
+          </button>
+        )}
     </div>
   );
 };
