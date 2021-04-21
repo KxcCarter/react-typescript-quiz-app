@@ -7,26 +7,48 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-            background-color: lightblue;
-            background-position: top;
+        background-image: url('https://operisstorage.s3.us-east-2.amazonaws.com/0DBD3D96-1B82-4050-846E-DC6DD7A60E98_1_201_a.jpeg');
+        background-repeat: repeat-x;
+        background-size: cover;
+        transition: background-size 2s ease-in-out;
+        
+        background-position: top 0;
+        
         }
 
         .gradient {
             background: red;
             z-index: -1;
-            width: 100vw;
-            height: 450px;
+            width: 50vw;
+            height: 0px;
             position: absolute;
+            
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
             left: 0px;
+            visibility: hidden;
         }
+
+    @media screen and (min-width: 1300px) {
+
+        body {
+        background-repeat: repeat;
+        aspect-ratio: 16/9;
+        background-size: 33vw;
+           
+        }
+    }
 
     @media (max-width: 800px) {
     body {
-        /* background-color: #E0D2C9; */
-        background-image: url('https://operisstorage.s3.us-east-2.amazonaws.com/0DBD3D96-1B82-4050-846E-DC6DD7A60E98_1_201_a.jpeg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center 435px;
+
+        transition: background-position 2s ease-in-out;
+
         margin: 0;
         padding: 0 20px;
         display: flex;
@@ -35,9 +57,10 @@ export const GlobalStyle = createGlobalStyle`
 
     .gradient {
         background: linear-gradient(135deg, #DED3C7, #DACEBE);
-        /* background-size: contain; */
-        
-        
+        width: 100vw;
+        height: 450px;
+        visibility: visible;
+        transition: height 2s ease-in-out;
     }
 }
 
